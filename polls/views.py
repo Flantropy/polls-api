@@ -1,16 +1,5 @@
-from rest_framework import viewsets
-from .models import Poll, Question
-from .serializers import PollSerializer, QuestionSerializer
-from rest_framework.permissions import IsAdminUser
+from django.shortcuts import render
 
 
-class PollViewSet(viewsets.ModelViewSet):
-    queryset = Poll.objects.all()
-    serializer_class = PollSerializer
-    permission_classes = [IsAdminUser]
-
-
-class QuestionViewSet(viewsets.ModelViewSet):
-    queryset = Question.objects.all()
-    serializer_class = QuestionSerializer
-    permission_classes = [IsAdminUser]
+def home_page(request):
+    return render(request, template_name='polls/home.html')
