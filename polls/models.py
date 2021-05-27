@@ -10,10 +10,16 @@ class Poll(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['start_date']
+
 
 class Question(models.Model):
-    survey = models.ForeignKey(Poll, related_name='questions', on_delete=models.CASCADE)
+    poll = models.ForeignKey(Poll, related_name='questions', on_delete=models.CASCADE)
     question_text = models.CharField(max_length=300, default='')
 
     def __str__(self):
         return self.question_text
+
+    class Meta:
+        ordering = ['poll']
