@@ -8,11 +8,11 @@ class PollSerializer(serializers.HyperlinkedModelSerializer):
                                                     read_only=True)
 
     class Meta:
-        fields = '__all__'
+        fields = ['name', 'description', 'url', 'questions']
         model = Poll
 
 
 class QuestionSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        fields = '__all__'
+        fields = ['question_text', 'poll']
         model = Question

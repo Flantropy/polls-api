@@ -3,8 +3,8 @@ from rest_framework.routers import DefaultRouter
 from . import views
 
 router = DefaultRouter()
-router.register(r'manage_polls', views.PollViewSet)
-router.register(r'manage_questions', views.QuestionViewSet)
+router.register(r'manage_polls', views.PollViewSet, basename='poll')
+router.register(r'manage_questions', views.QuestionViewSet, basename='question')
 
 urlpatterns = [
     path('', include(router.urls)),
