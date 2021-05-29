@@ -7,8 +7,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    'rest_framework',
     'polls.apps.PollsConfig',
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -82,5 +82,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'templates')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
