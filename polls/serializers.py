@@ -1,18 +1,24 @@
 from rest_framework import serializers
-from .models import Poll, Question
+from .models import Poll, Choice, Vote
 
 
-class PollSerializer(serializers.HyperlinkedModelSerializer):
-    questions = serializers.HyperlinkedRelatedField(many=True,
-                                                    view_name='question-detail',
-                                                    read_only=True)
+class VoteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Vote
+        fields = '__all__'
+
+
+class ChoiceSerializer(serializers.ModelSerializer):
+    votes = VoteSerializer(many=True, required=False)
 
     class Meta:
+        model = Choice
         fields = '__all__'
+
+
+class PollSerializer(serializers.ModelSerializer):
+    choices = ChoiceSerializer(many=True, read_only=True, required=False)
+
+    class Meta:
         model = Poll
-
-
-class QuestionSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
         fields = '__all__'
-        model = Question
