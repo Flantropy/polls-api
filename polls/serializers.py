@@ -1,23 +1,24 @@
 from rest_framework import serializers
-from .models import Poll, Choice, Vote
+from .models import Poll, Question
 
 
-class VoteSerializer(serializers.ModelSerializer):
+class QuestionSerializer(serializers.ModelSerializer):
+    # votes = VoteSerializer(many=True, required=False)
     class Meta:
-        model = Vote
-        fields = '__all__'
-
-
-class ChoiceSerializer(serializers.ModelSerializer):
-    votes = VoteSerializer(many=True, required=False)
-
-    class Meta:
-        model = Choice
-        fields = '__all__'
+        model = Question
+        fields = [
+            'poll',
+            'question_text',
+            'expected_answer_type',
+            'answer_variant_1',
+            'answer_variant_2',
+            'answer_variant_3',
+            'answer_variant_4'
+        ]
 
 
 class PollSerializer(serializers.ModelSerializer):
-    choices = ChoiceSerializer(many=True, read_only=True, required=False)
+    questions = QuestionSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Poll

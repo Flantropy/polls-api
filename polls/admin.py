@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Poll, Choice
+from .models import Poll, Question
 
 admin.site.register(Poll)
-admin.site.register(Choice)
+admin.site.register(Question)
