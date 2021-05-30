@@ -14,18 +14,25 @@ class Poll(models.Model):
 
 
 class Question(models.Model):
-    class AnswerType(models.TextChoices):
-        REGULAR = ('R', 'one answer')
-        MULTIPLE = ('M', 'few answers')
-        TEXT = ('T', 'user input')
-
+    poll = models.ForeignKey(Poll, related_name='questions', on_delete=models.CASCADE)
     question_text = models.CharField(max_length=500, default='Propose some question')
-    poll = models.ForeignKey(Poll, related_name='choices', on_delete=models.CASCADE)
-    expected_answer_type = models.CharField(max_length=8, choices=AnswerType.choices)
-    answer_variant_1 = models.CharField(max_length=200, default='answer example')
-    answer_variant_2 = models.CharField(max_length=200, default='answer example')
-    answer_variant_3 = models.CharField(max_length=200, default='answer example')
-    answer_variant_4 = models.CharField(max_length=200, default='answer example')
+
+    class AnswerType(models.TextChoices):
+        REGULAR = ('regular', 'one answer')
+        MULTIPLE = ('multiple', 'few answers')
+        TEXT = ('text', 'user input')
+
+    expected_answer_type = models.CharField(max_length=20, choices=AnswerType.choices)
 
     def __str__(self):
         return self.question_text
+
+
+class Answer(models.Model):
+    answer_text = models.CharField(max_length=300, default='')
+    question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+
+
+class Vote(models.Model):
+    voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, related_name='votes', on_delete=models.CASCADE)
