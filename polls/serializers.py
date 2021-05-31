@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Poll, Choice, Vote
+from .models import Poll, Question, Answer, Vote
 
 
 class VoteSerializer(serializers.ModelSerializer):
@@ -8,16 +8,24 @@ class VoteSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ChoiceSerializer(serializers.ModelSerializer):
-    votes = VoteSerializer(many=True, required=False)
+class AnswerSerializer(serializers.ModelSerializer):
+    votes = VoteSerializer(many=True, read_only=True, required=False)
 
     class Meta:
-        model = Choice
+        model = Answer
+        fields = '__all__'
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    answers = AnswerSerializer(many=True, read_only=True, required=False)
+
+    class Meta:
+        model = Question
         fields = '__all__'
 
 
 class PollSerializer(serializers.ModelSerializer):
-    choices = ChoiceSerializer(many=True, read_only=True, required=False)
+    questions = QuestionSerializer(many=True, read_only=True, required=False)
 
     class Meta:
         model = Poll

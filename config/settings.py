@@ -1,20 +1,23 @@
 import os
 from pathlib import Path
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-lu@_wr!y-0w+0du%d5yy_vd)j3ds_=r42f9ktry5fr=6zbugy6'
 DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
-    'polls.apps.PollsConfig',
-    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+
+    'polls.apps.PollsConfig',
 ]
 
 REST_FRAMEWORK = {
