@@ -32,7 +32,16 @@ class Answer(models.Model):
     answer_text = models.CharField(max_length=300, default='')
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.answer_text
+
 
 class Vote(models.Model):
     voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, related_name='votes', on_delete=models.CASCADE)
+    user_input = models.CharField(max_length=300, default='')
+
+    def __str__(self):
+        if self.user_input:
+            return f'{self.voted_by.username} voted for {self.user_input}'
+        return f'{self.voted_by.username} voted for {self.answer}'

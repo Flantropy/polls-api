@@ -4,7 +4,7 @@ from .models import Poll, Question, Answer, Vote
 
 class VoteSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Answer
+        model = Vote
         fields = '__all__'
 
 
@@ -12,7 +12,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     votes = VoteSerializer(many=True, read_only=True, required=False)
 
     class Meta:
-        model = Vote
+        model = Answer
         fields = '__all__'
 
 
