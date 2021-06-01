@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 from rest_framework.test import APIRequestFactory
-from polls.apiviews import PollViewSet
+from polls.apiviews import PollViewSet, QuestionViewSet, AnswerViewSet, VoteViewSet
 
 
 class TestPoll(APITestCase):
@@ -16,3 +16,69 @@ class TestPoll(APITestCase):
             response.status_code, 200,
             msg=f'Expected Response Code 200, received {response.status_code} instead.'
         )
+
+    def test_users_unable_to_create_polls(self):
+        self.factory.post(self.uri)
+        self.assertEqual(1, 0)
+
+    def tests_users_able_to_access_list_of_polls(self):
+        self.assertEqual(1, 0)
+
+    def test_users_dont_see_outdated_polls(self):
+        self.assertEqual(1, 0)
+
+    def test_superuser_able_to_create_polls(self):
+        self.assertEqual(1, 0)
+
+
+class TestQuestions(APITestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.view = QuestionViewSet.as_view({'get': 'list'})
+        self.uri = '/questions/'
+
+    def test_list(self):
+        self.assertEqual(1, 0)
+
+    def test_users_unable_to_create_questions(self):
+        self.assertEqual(1, 0)
+
+    def tests_users_able_to_access_list_of_questions(self):
+        self.assertEqual(1, 0)
+
+    def test_superuser_able_to_create_questions(self):
+        self.assertEqual(1, 0)
+
+
+class TestAnswers(APITestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.view = AnswerViewSet.as_view({'get': 'list'})
+        self.uri = '/answers/'
+
+    def test_list(self):
+        self.assertEqual(1, 0)
+
+    def test_users_unable_to_create_answers(self):
+        self.assertEqual(1, 0)
+
+    def tests_users_able_to_access_list_of_answers(self):
+        self.assertEqual(1, 0)
+
+    def test_superuser_able_to_create_answers(self):
+        self.assertEqual(1, 0)
+
+
+class TestVotes(APITestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.view = VoteViewSet.as_view({'get': 'list'})
+        self.uri = '/votes/'
+
+    def test_list(self):
+        self.assertEqual(1, 0)
+
+    def test_users_can_vote_anonymously(self):
+        self.assertEqual(1, 0)
+
+

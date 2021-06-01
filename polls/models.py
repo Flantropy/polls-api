@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -36,12 +38,13 @@ class Answer(models.Model):
         return self.answer_text
 
 
+# noinspection PyCallingNonCallable
 class Vote(models.Model):
-    voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.UUIDField(default=uuid.uuid4, editable=False)
+    # voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.ForeignKey(Answer, related_name='votes', on_delete=models.CASCADE)
     user_input = models.CharField(max_length=300, default='')
 
     def __str__(self):
-        if self.user_input:
-            return f'{self.voted_by.username} voted for {self.user_input}'
-        return f'{self.voted_by.username} voted for {self.answer}'
+        vote = self.answer if not self.user_input else self.user_input
+        return f'{self.user} voted for {vote}'
