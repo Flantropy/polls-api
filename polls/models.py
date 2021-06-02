@@ -31,18 +31,21 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer_text = models.CharField(max_length=300, default='')
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    answer_text = models.CharField(max_length=300, default='')
 
     def __str__(self):
         return self.answer_text
 
 
+# TODO  resolve unique user id problem
 # noinspection PyCallingNonCallable
 class Vote(models.Model):
-    user = models.UUIDField(default=uuid.uuid4, editable=False)
+    answer = models.ForeignKey(Answer, related_name='votes', editable=False,
+                               on_delete=models.CASCADE)
     # voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Answer, related_name='votes', on_delete=models.CASCADE)
+    # question = models.ForeignKey(Question, related_name='votes', on_delete=models.CASCADE)
+    user = models.CharField(max_length=50, editable=False)
     user_input = models.CharField(max_length=300, default='')
 
     def __str__(self):
