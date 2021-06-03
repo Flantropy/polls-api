@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 class Poll(models.Model):
     title = models.CharField(max_length=100, unique=True, default='Poll Title')
     description = models.CharField(max_length=500, default='Describe your poll here')
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     starts_on = models.DateField(auto_now_add=True)
     expires_on = models.DateField(null=True)
 
@@ -29,19 +29,23 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    answer_text = models.CharField(max_length=300, default='')
     question = models.ForeignKey(Question, related_name='answers', on_delete=models.CASCADE)
+    answer_text = models.CharField(max_length=300, default='')
 
     def __str__(self):
         return self.answer_text
 
 
+# TODO  resolve unique user id problem
+# noinspection PyCallingNonCallable
 class Vote(models.Model):
-    voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    answer = models.ForeignKey(Answer, related_name='votes', on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, related_name='votes', editable=False,
+                               on_delete=models.CASCADE)
+    # voted_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    # question = models.ForeignKey(Question, related_name='votes', on_delete=models.CASCADE)
+    user = models.CharField(max_length=50, editable=False)
     user_input = models.CharField(max_length=300, default='')
 
     def __str__(self):
-        if self.user_input:
-            return f'{self.voted_by.username} voted for {self.user_input}'
-        return f'{self.voted_by.username} voted for {self.answer}'
+        vote = self.answer if not self.user_input else self.user_input
+        return f'{self.user} voted for {vote}'

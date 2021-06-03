@@ -1,11 +1,11 @@
-from .apiviews import(
+from rest_framework_extensions.routers import ExtendedDefaultRouter
+
+from .apiviews import (
     PollViewSet,
     QuestionViewSet,
     AnswerViewSet,
     VoteViewSet,
 )
-from rest_framework_extensions.routers import ExtendedDefaultRouter
-
 
 # /polls/<int:pk>/questions/<int:pk>/answers/<int:pk>/votes/<int:pk>/
 router = ExtendedDefaultRouter()
